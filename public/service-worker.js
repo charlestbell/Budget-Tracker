@@ -1,7 +1,13 @@
 const CACHE_NAME = "static-cache-v2";
 const DATA_CACHE_NAME = "data-cache-v1";
+const DATA_TO_POST = "post-me-v1";
 const FILES_TO_CACHE = [
-  // "/", "/index.html", "/assets/css/style.css"
+  "/",
+  "/index.html",
+  "/index.js",
+  "/styles.css",
+  "/icons/icon-192x192.png",
+  "/icons/icon-512x512.png",
 ];
 
 // install
@@ -50,14 +56,10 @@ self.addEventListener("fetch", function (evt) {
           return fetch(evt.request)
             .then((response) => {
               // If the response was good, clone it and store it in the cache.
-              if (response.status) {
-                if (response.status === 200) {
-                  cache.put(evt.request.url, response.clone());
-                }
-                return response;
-              } else {
-                cache.put(evt.request);
+              if (response.status === 200) {
+                cache.put(evt.request.url, response.clone());
               }
+              return response;
             })
             .catch((err) => {
               console.log("Getting from offline cache");
